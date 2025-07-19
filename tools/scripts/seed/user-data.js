@@ -140,7 +140,7 @@ module.exports.publicUser = {
 
 module.exports.demoUser = {
   _id: demoUserId,
-  email: 'foo@bar.com',
+  email: 'demofoo@bar.com',
   emailVerified: true,
   progressTimestamps: [],
   isBanned: false,
@@ -12293,9 +12293,30 @@ module.exports.fullyCertifiedUser = {
   unsubscribeId: 'tBX8stC5jiustPBteF2mV'
 };
 
+const classroomUsers = [];
+// Auto-generated 20 users (same as before)
+for (let i = 1; i <= 20; i++) {
+  const userId = new ObjectId();
+  classroomUsers.push({
+    _id: userId,
+    email: `classroom${i}@example.com`,
+    emailVerified: true,
+    username: `classroomUser${i}`,
+    name: `Classroom User ${i}`,
+    about: '',
+    isRespWebDesignCert: i % 2 === 0,
+    isQaCertV7: i % 3 === 0,
+    progressTimestamps: [],
+    completedChallenges: [],
+    acceptedPrivacyTerms: true,
+    profileUI: { isLocked: false }
+  });
+}
+module.exports.classroomUsers = classroomUsers;
+
 module.exports.almostFullyCertifiedUser = {
   ...module.exports.fullyCertifiedUser,
-  id: almostFullyCertifiedUserId,
+  _id: almostFullyCertifiedUserId,
   completedChallenges:
     module.exports.fullyCertifiedUser.completedChallenges.filter(
       challenge => challenge.id !== 'bd7158d8c442eddfaeb5bd13'

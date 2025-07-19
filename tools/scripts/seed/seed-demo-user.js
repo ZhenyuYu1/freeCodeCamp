@@ -11,7 +11,8 @@ const {
   publicUser,
   fullyCertifiedUser,
   userIds,
-  almostFullyCertifiedUser
+  almostFullyCertifiedUser,
+  classroomUsers
 } = require('./user-data');
 
 const options = {
@@ -133,6 +134,16 @@ const run = async () => {
 
   await user.insertOne(blankUser);
   await user.insertOne(publicUser);
+
+  try {
+    await user.insertMany(classroomUsers, { ordered: false });
+  } catch (err) {
+    if (err.code === 11000) {
+      console.log('Some classroom users already exist, skipping duplicates.');
+    } else {
+      throw err; // rethrow if it's a different error
+    }
+  }
 
   log('local auth user seed complete');
 };

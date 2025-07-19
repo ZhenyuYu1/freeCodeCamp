@@ -52,6 +52,7 @@ import {
   examEnvironmentValidatedTokenRoutes
 } from './exam-environment/routes/exam-environment';
 
+import { helloRoute } from './routes/public/hello';
 type FastifyInstanceWithTypeProvider = FastifyInstance<
   RawServerDefault,
   RawRequestDefaultExpression,
@@ -182,6 +183,8 @@ export const build = async (
       fastify.addHook('onRequest', fastify.send401IfNoUser);
 
       await fastify.register(protectedRoutes.userGetRoutes);
+      await fastify.register(protectedRoutes.protectedHelloRoute);
+      await fastify.register(protectedRoutes.classroomRoutes);
     });
 
     // Routes that redirect if access is denied:
@@ -228,6 +231,8 @@ export const build = async (
   void fastify.register(publicRoutes.deprecatedEndpoints);
   void fastify.register(publicRoutes.statusRoute);
   void fastify.register(publicRoutes.unsubscribeDeprecated);
+  // Register the hello route
+  void fastify.register(helloRoute);
 
   return fastify;
 };
